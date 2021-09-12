@@ -34,9 +34,25 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  pay_android: ^1.0.4
-  pay_ios: ^1.0.4
-  pay_platform_interface: ^1.0.2
+
+  pay_android:
+    git:
+      url: git://github.com/risdeit/flutter-plugin
+      path: pay_android
+      ref: main
+
+  pay_ios:
+    git:
+      url: git://github.com/risdeit/flutter-plugin
+      path: pay_ios
+      ref: main
+
+  pay_platform_interface:
+    git:
+      url: git://github.com/risdeit/flutter-plugin
+      path: pay_platform_interface
+      ref: main
+
   meta: ^1.3.0-nullsafety.3
 
 
