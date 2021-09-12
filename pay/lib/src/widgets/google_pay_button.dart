@@ -21,22 +21,21 @@ part of '../../pay.dart';
 /// )
 /// ```
 class GooglePayButton extends PayButton {
-  late final Widget _googlePayButton;
 
   GooglePayButton({
-    Key? key,
-    required String paymentConfigurationAsset,
-    required void Function(Map<String, dynamic> result) onPaymentResult,
-    required List<PaymentItem> paymentItems,
+    Key key,
+    @required String paymentConfigurationAsset,
+    @required void Function(Map<String, dynamic> result) onPaymentResult,
+    @required List<PaymentItem> paymentItems,
     GooglePayButtonStyle style = GooglePayButtonStyle.black,
     GooglePayButtonType type = GooglePayButtonType.pay,
     double width = RawGooglePayButton.minimumButtonWidth,
     double height = RawGooglePayButton.defaultButtonHeight,
     EdgeInsets margin = EdgeInsets.zero,
-    VoidCallback? onPressed,
-    void Function(Object? error)? onError,
-    Widget? childOnError,
-    Widget? loadingIndicator,
+    VoidCallback onPressed,
+    void Function(Object error) onError,
+    Widget childOnError,
+    Widget loadingIndicator,
   })  : assert(width >= RawGooglePayButton.minimumButtonWidth),
         assert(height >= RawGooglePayButton.defaultButtonHeight),
         super(
@@ -50,7 +49,7 @@ class GooglePayButton extends PayButton {
           childOnError,
           loadingIndicator,
         ) {
-    _googlePayButton = RawGooglePayButton(
+    _payButton = RawGooglePayButton(
         style: style,
         type: type,
         onPressed: _defaultOnPressed(onPressed, paymentItems));
@@ -60,5 +59,5 @@ class GooglePayButton extends PayButton {
   final List<TargetPlatform> _supportedPlatforms = [TargetPlatform.android];
 
   @override
-  late final Widget _payButton = _googlePayButton;
+  Widget _payButton;
 }

@@ -28,7 +28,7 @@ extension on PaymentItemStatus {
         PaymentItemStatus.unknown: 'unknown',
         PaymentItemStatus.pending: 'pending',
         PaymentItemStatus.final_price: 'final_price',
-      }[this]!;
+      }[this];
 }
 
 /// The payment types supported when showing the payment selector.
@@ -43,7 +43,7 @@ extension on PaymentItemType {
   String toSimpleString() => {
         PaymentItemType.item: 'item',
         PaymentItemType.total: 'total',
-      }[this]!;
+      }[this];
 }
 
 /// A simple object that holds information about individual entries in the
@@ -73,7 +73,7 @@ extension on PaymentItemType {
 /// ```
 class PaymentItem {
   /// A text with basic information about the item.
-  final String? label;
+  final String label;
 
   ///  The price of the item in string format.
   final String amount;
@@ -87,14 +87,14 @@ class PaymentItem {
   /// Creates a new payment item with the specified parameters, defaulting to
   /// a [total] [type], and an [unknown] [status].
   const PaymentItem({
-    required this.amount,
+    this.amount,
     this.label,
     this.type = PaymentItemType.total,
     this.status = PaymentItemStatus.unknown,
   });
 
   /// Creates a map representation of the object.
-  Map<String, Object?> toMap() => {
+  Map<String, Object> toMap() => {
         'label': label,
         'amount': amount,
         'type': type.toSimpleString(),

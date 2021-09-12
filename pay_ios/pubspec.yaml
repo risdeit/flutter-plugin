@@ -32,10 +32,7 @@ dependencies:
     sdk: flutter
 
   pay_platform_interface:
-    git:
-      url: git://github.com/risdeit/flutter-plugin
-      path: pay_platform_interface
-      ref: main
+    path: ../pay_platform_interface
 
 dev_dependencies:
   flutter_test:

@@ -82,7 +82,7 @@ class RawApplePayButton extends StatelessWidget {
   final BoxConstraints constraints;
 
   /// Called when the button is pressed.
-  final VoidCallback? onPressed;
+  final VoidCallback onPressed;
 
   /// The style of the Apple Pay button, to be adjusted based on the color
   /// scheme of the application.
@@ -94,7 +94,7 @@ class RawApplePayButton extends StatelessWidget {
 
   /// Creates an Apple Pay button widget with the parameters specified.
   RawApplePayButton({
-    Key? key,
+    Key key,
     this.onPressed,
     this.style = ApplePayButtonStyle.black,
     this.type = ApplePayButtonType.plain,
@@ -133,31 +133,38 @@ class RawApplePayButton extends StatelessWidget {
 }
 
 /// A widget to draw the Apple Pay button through a [PlatforView].
-class _UiKitApplePayButton extends StatelessWidget {
+class _UiKitApplePayButton extends StatefulWidget {
   static const buttonId = 'plugins.flutter.io/pay/apple_pay_button';
-  late final MethodChannel? methodChannel;
 
-  final VoidCallback? onPressed;
+  final VoidCallback onPressed;
   final ApplePayButtonStyle style;
   final ApplePayButtonType type;
 
   _UiKitApplePayButton({
-    Key? key,
+    Key key,
     this.onPressed,
     this.style = ApplePayButtonStyle.black,
     this.type = ApplePayButtonType.plain,
   }) : super(key: key);
 
+
+  @override
+  _UiKitApplePayButtonState createState() => _UiKitApplePayButtonState();
+}
+
+class _UiKitApplePayButtonState extends State<_UiKitApplePayButton> {
+  MethodChannel methodChannel;
+
   @override
   Widget build(BuildContext context) {
     return UiKitView(
-      viewType: buttonId,
+      viewType: _UiKitApplePayButton.buttonId,
       creationParamsCodec: const StandardMessageCodec(),
-      creationParams: {'style': style.enumString, 'type': type.enumString},
+      creationParams: {'style': widget.style.enumString, 'type': widget.type.enumString},
       onPlatformViewCreated: (viewId) {
-        methodChannel = MethodChannel('$buttonId/$viewId');
+        methodChannel = MethodChannel('$_UiKitApplePayButton.buttonId/$viewId');
         methodChannel?.setMethodCallHandler((call) async {
-          if (call.method == 'onPressed') onPressed?.call();
+          if (call.method == 'onPressed') widget.onPressed.call();
           return;
         });
       },
@@ -185,7 +192,7 @@ extension on ApplePayButtonType {
         ApplePayButtonType.support: 'support',
         ApplePayButtonType.contribute: 'contribute',
         ApplePayButtonType.tip: 'tip',
-      }[this]!;
+      }[this];
 }
 
 /// A set of utility methods associated to the [ApplePayButtonStyle] enumeration.
@@ -196,5 +203,5 @@ extension on ApplePayButtonStyle {
         ApplePayButtonStyle.whiteOutline: 'whiteOutline',
         ApplePayButtonStyle.black: 'black',
         ApplePayButtonStyle.automatic: 'automatic',
-      }[this]!;
+      }[this];
 }

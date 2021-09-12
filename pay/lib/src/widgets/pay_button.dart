@@ -27,7 +27,7 @@ part of '../../pay.dart';
 /// method which starts the payment process.
 abstract class PayButton extends StatefulWidget {
   /// A resident client to issue requests against the APIs.
-  late final Pay _payClient;
+  final Pay _payClient;
 
   final double width;
   final double height;
@@ -37,20 +37,20 @@ abstract class PayButton extends StatefulWidget {
   final void Function(Map<String, dynamic> result) onPaymentResult;
 
   /// A function called when there's an error in the payment process.
-  final void Function(Object? error)? onError;
+  final void Function(Object error) onError;
 
   /// A replacement widget shown instead of the button when the payment process
   /// errors. This can be used to show a different checkout button or an error
   /// message.
-  final Widget? childOnError;
+  final Widget childOnError;
 
   /// An optional widget to show while the payment provider checks whether
   /// a user can pay with it and the button loads.
-  final Widget? loadingIndicator;
+  final Widget loadingIndicator;
 
   /// Initializes the button and the payment client that handles the requests.
   PayButton(
-    Key? key,
+    Key key,
     String paymentConfigurationAsset,
     this.onPaymentResult,
     this.width,
@@ -68,7 +68,7 @@ abstract class PayButton extends StatefulWidget {
   /// function if set, and initiates the payment process with the [paymentItems]
   /// specified.
   VoidCallback _defaultOnPressed(
-      VoidCallback? onPressed, List<PaymentItem> paymentItems) {
+      VoidCallback onPressed, List<PaymentItem> paymentItems) {
     return () async {
       onPressed?.call();
       try {
@@ -106,7 +106,7 @@ abstract class PayButton extends StatefulWidget {
 /// [_payButton] is added to the tree. Otherwise, if set, the replacement widget
 /// in [childOnError] is shown.
 class _PayButtonState extends State<PayButton> {
-  late final Future<bool> userCanPayFuture;
+  Future<bool> userCanPayFuture;
 
   Future<bool> userCanPay() async {
     try {
@@ -162,13 +162,13 @@ class _PayButtonState extends State<PayButton> {
 /// Shows the appropriate widget based on the API requests above, respecting the
 /// [margin] if the [child] is set.
 class ButtonPlaceholder extends StatelessWidget {
-  final Widget? child;
+  final Widget child;
   final EdgeInsets margin;
 
   ButtonPlaceholder({
-    Key? key,
+    Key key,
     this.child,
-    required this.margin,
+    @required this.margin,
   }) : super(key: key);
 
   @override

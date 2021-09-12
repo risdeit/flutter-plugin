@@ -24,10 +24,10 @@ class Pay {
   final PayPlatform _payPlatform;
 
   /// List of configurations for the payment providers targeted.
-  late final List<PaymentConfiguration> _configurations;
+  List<PaymentConfiguration> _configurations;
 
   // Future to keep track of asynchronous initialization items.
-  Future? _assetInitializationFuture;
+  Future _assetInitializationFuture;
 
   /// Creates an instance of the class with a list of [_configurations] and
   /// instantiates the [_payPlatform] to communicate with the native platforms.
@@ -46,7 +46,7 @@ class Pay {
           configurationAssets.map((ca) => PaymentConfiguration.fromAsset(ca)));
 
   /// Helper method to load the payment configuration for a given [provider].
-  PaymentConfiguration _findConfig([PayProvider? provider]) => provider == null
+  PaymentConfiguration _findConfig([PayProvider provider]) => provider == null
       ? _configurations.first
       : _configurations.firstWhere((c) => c.provider == provider);
 
@@ -55,11 +55,11 @@ class Pay {
   /// This method wraps the [userCanPay] method in the platform interface. It
   /// makes sure that the [provider] exists and is available in the platform
   /// running the logic.
-  Future<bool> userCanPay([PayProvider? provider]) async {
+  Future<bool> userCanPay([PayProvider provider]) async {
     await _assetInitializationFuture;
     final configuration = _findConfig(provider);
 
-    if (supportedProviders[defaultTargetPlatform]!
+    if (supportedProviders[defaultTargetPlatform]
         .contains(configuration.provider.toSimpleString())) {
       return _payPlatform.userCanPay(configuration);
     }
@@ -73,8 +73,8 @@ class Pay {
   /// interface, and opens the payment selector for the [provider] of choice,
   /// with the [paymentItems] in the price summary.
   Future<Map<String, dynamic>> showPaymentSelector({
-    PayProvider? provider,
-    required List<PaymentItem> paymentItems,
+    PayProvider provider,
+    @required List<PaymentItem> paymentItems,
   }) async {
     await _assetInitializationFuture;
     final configuration = _findConfig(provider);

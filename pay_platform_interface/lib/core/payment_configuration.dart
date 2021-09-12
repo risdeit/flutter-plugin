@@ -44,10 +44,10 @@ typedef ConfigLoader = Future<Map<String, dynamic>> Function(String value);
 /// ```
 class PaymentConfiguration {
   /// The payment provider for this configuration.
-  late final PayProvider provider;
+  final PayProvider provider;
 
   /// The configuration parameters for a given payment provider.
-  late final Future<Map<String, dynamic>> _parameters;
+  final Future<Map<String, dynamic>> _parameters;
 
   /// Creates a [PaymentConfiguration] object with the properties in the map
   /// and ensures the necessary fields are present and valid.
@@ -55,7 +55,7 @@ class PaymentConfiguration {
       : assert(configuration.containsKey('provider')),
         assert(configuration.containsKey('data')),
         assert(PayProviders.isValidProvider(configuration['provider'])),
-        provider = PayProviders.fromString(configuration['provider'])!,
+        provider = PayProviders.fromString(configuration['provider']),
         _parameters = Future.value(configuration['data']);
 
   /// Creates a [PaymentConfiguration] object from the
@@ -103,7 +103,7 @@ class PaymentConfiguration {
 }
 
 extension PayProviders on PayProvider {
-  static PayProvider? fromString(String providerString) => {
+  static PayProvider fromString(String providerString) => {
         'apple_pay': PayProvider.apple_pay,
         'google_pay': PayProvider.google_pay,
       }[providerString];
@@ -111,7 +111,7 @@ extension PayProviders on PayProvider {
   static bool isValidProvider(String providerString) =>
       fromString(providerString) != null;
 
-  String? toSimpleString() => {
+  String toSimpleString() => {
         PayProvider.apple_pay: 'apple_pay',
         PayProvider.google_pay: 'google_pay',
       }[this];

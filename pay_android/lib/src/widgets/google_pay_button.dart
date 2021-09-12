@@ -88,7 +88,7 @@ class RawGooglePayButton extends StatelessWidget {
   ];
 
   /// Called when the button is pressed.
-  final VoidCallback? onPressed;
+  final VoidCallback onPressed;
 
   /// The style of the Google Pay button, to be adjusted based on the color
   /// scheme of the application.
@@ -100,7 +100,7 @@ class RawGooglePayButton extends StatelessWidget {
 
   /// Creates a Google Pay button widget with the parameters specified.
   const RawGooglePayButton({
-    Key? key,
+    Key key,
     this.onPressed,
     this.style = GooglePayButtonStyle.black,
     this.type = GooglePayButtonType.pay,
@@ -116,7 +116,7 @@ class RawGooglePayButton extends StatelessWidget {
       return 'assets/$assetName';
     }
 
-    final langCode = Localizations.maybeLocaleOf(context)?.languageCode;
+    final langCode = Localizations.localeOf(context)?.languageCode;
     final supportedLangCode =
         _supportedLocales.contains(langCode) ? langCode : _defaultLocale;
 
