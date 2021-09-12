@@ -72,7 +72,7 @@ dependencies:
       url: git://github.com/risdeit/flutter-plugin
       path: pay_platform_interface
       ref: main
-  flutter_svg: ^0.18.0
+  flutter_svg: ^0.19.1
 
 dev_dependencies:
   flutter_test:
