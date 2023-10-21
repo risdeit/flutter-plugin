@@ -70,7 +70,7 @@ dependencies:
 
   pay_platform_interface:
     git:
-      url: git://github.com/risdeit/flutter-plugin
+      url: https://github.com/risdeit/flutter-plugin.git
       path: pay_platform_interface
       ref: main
 
